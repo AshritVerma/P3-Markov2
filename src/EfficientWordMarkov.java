@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class EfficientWordMarkov extends BaseWordMarkov
@@ -18,15 +19,16 @@ public class EfficientWordMarkov extends BaseWordMarkov
     {
         myMap.clear();
         myWords = text.split("\\s+");
-        for(int i = 0; i < myWords.length - myOrder; i++)
+        for(int i = 0; i <= myWords.length - myOrder; i++)
         {
             WordGram wg = new WordGram(myWords, i, myOrder);
+            String nextValue = PSEUDO_EOS;
+            if(i < myWords.length - myOrder)
+                nextValue = myWords[i + myOrder];
             if(!myMap.containsKey(wg))
-            {
                 myMap.put(wg, new ArrayList<>());
-            }
-            myMap.put(wg, getFollows(wg));
-            //myMap.get(wg).add(getFollows(wg));
+            //myMap.put(wg, getFollows(wg));
+            myMap.get(wg).add(nextValue);
         }
     }
 
